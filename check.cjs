@@ -1,0 +1,24 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const nodes=new Map();const context={console,performance:{now:()=>0},requestAnimationFrame:()=>{},setTimeout,clearTimeout,Worker:class{},document:{getElementById:id=>{if(!nodes.has(id))nodes.set(id,{textContent:'',value:'',innerHTML:'',getContext:()=>({}),classList:{toggle(){}},dataset:{}});return nodes.get(id);},querySelectorAll:()=>[]}};
+vm.createContext(context);vm.runInContext(fs.readFileSync('dist/game.js','utf8'),context);
+vm.runInContext(`
+apply({type:'build',element:'fire',pad:1},'build');
+if(gold!==180||towers.length!==1)throw Error('build');
+apply({type:'build',element:'water',pad:1},'build');
+if(gold!==180)throw Error('occupied pad');
+apply({type:'upgrade',pad:1,element:'water'},'build');
+if(gold!==100||towers[0].level!==2||towers[0].secondary!=='water')throw Error('upgrade');
+if(modifier('fire','nature')!==1.6||modifier('fire','water')!==.65)throw Error('elements');
+apply({type:'sell',pad:1},'build');
+if(gold!==184||towers.length)throw Error('sell');
+reset();start();for(let i=0;i<2000;i++)step(.05);
+if(lives!==11||active)throw Error('unprotected wave');
+reset();apply({type:'build',element:'water',pad:1},'build');
+const enemy={id:99,x:105,y:225,hp:100,element:'fire'};
+attack(towers[0],enemy);if(enemy.hp!==76)throw Error('damage');
+attack(towers[0],enemy);if(enemy.hp!==76)throw Error('cooldown');
+`,context);
+let result;const worker={self:{},postMessage:r=>result=r};vm.createContext(worker);vm.runInContext(fs.readFileSync('dist/runner.js','utf8'),worker);
+worker.self.onmessage({data:{code:'const element = "fire"; build(element, 1); log(gold);',mode:'build',state:{gold:240,wave:0,towers:[],enemies:[]}}});assert.equal(result.actions[0].element,'fire');assert.equal(result.logs[0],'240');
+worker.self.onmessage({data:{code:'if (',mode:'build',state:{gold:240,wave:0,towers:[],enemies:[]}}});assert.ok(result.error);
+console.log('Passed: building, occupancy, hybrid upgrades, refunds, elemental damage, cooldowns, waves, JavaScript actions, syntax errors.');
