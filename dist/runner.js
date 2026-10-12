@@ -1,16 +1,2 @@
-// Dedicated worker. Messages contain snapshots, never direct game references.
-self.onmessage = ({data}) => {
- const actions = [], logs = [];
- const {code, state, mode} = data;
- try {
-  const fn = new Function('gold','wave','towers','enemies','build','upgrade','sell','attack','distance','log', '"use strict";\n' + code);
-  fn(state.gold,state.wave,state.towers,state.enemies,
-   (element,pad)=>actions.push({type:'build',element,pad}),
-   (pad,element)=>actions.push({type:'upgrade',pad,element}),
-   pad=>actions.push({type:'sell',pad}),
-   (tower,enemy)=>actions.push({type:'attack',tower,enemy}),
-   (a,b)=>Math.hypot(a.x-b.x,a.y-b.y),
-   (...args)=>{if(logs.length<20) logs.push(args.map(a=>typeof a==='object'?JSON.stringify(a):String(a)).join(' '));});
-  postMessage({actions:actions.slice(0,200),logs,mode});
- } catch(error) {postMessage({error:error.message,mode});}
-};
+// User JavaScript runs off the rendering thread. Main thread validates each action.
+self.onmessage=({data})=>{const {code,state}=data,actions=[],logs=[];try{const action=(type,payload)=>{if(actions.length<200)actions.push({type,...payload});};const fn=new Function('gold','lumber','lives','wave','elements','towers','enemies','sites','build','upgrade','sell','attack','cast','summon','interest','distance','log','"use strict";\n'+code);fn(state.gold,state.lumber,state.lives,state.wave,state.elements,state.towers,state.enemies,state.sites,(type,site,y)=>{if(y!==undefined)action('build',{tower:type,x:site,y});else{const pad=state.sites.find(s=>s.id===site);if(pad)action('build',{tower:type,x:pad.x,y:pad.y});else throw Error('Unknown site number.');}},(id,type)=>action('upgrade',{id,tower:type}),id=>action('sell',{id}),(tower,enemy)=>action('attack',{id:tower,enemy}),id=>action('cast',{id}),element=>action('summon',{element}),()=>action('interest',{}),(a,b)=>Math.hypot(a.x-b.x,a.y-b.y),(...args)=>{if(logs.length<10)logs.push(args.map(v=>typeof v==='object'?JSON.stringify(v):String(v)).join(' '));});postMessage({actions,logs});}catch(error){postMessage({error:error.message});}};
