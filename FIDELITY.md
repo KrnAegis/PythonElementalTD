@@ -85,3 +85,5 @@ Every defense is reachable through its graph/requirements and has a working atta
 - Chromium desktop/mobile checks cover startup, original data loading, real code-worker actions, wave spawning, responsive overflow, and uncaught runtime exceptions.
 
 For stricter parity, the next engineering work is translating and testing the remaining native/dynamic spell behavior against the original 4.3b map in the matching Warcraft III runtime.
+
+Placement uses a browser-friendly 96-unit grid with an 80-unit footprint and one tower per cell. This deliberately allows adjacent towers and differs from the original Warcraft placement spacing. Existing saved towers retain their positions.
