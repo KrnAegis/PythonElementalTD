@@ -1,6 +1,6 @@
 # Element TD — The Sixfold Frontier
 
-A **single-player browser recreation** of Element TD Survivor 4.3b, based on the uploaded Warcraft III map. Includes original pixel-art atlases, synthesized sound/music, mouse/touch controls, optional real JavaScript building and combat, and local save/resume.
+A **single-player browser recreation** of Element TD Survivor 4.3b, based on the uploaded Warcraft III map. Includes original pixel-art atlases, synthesized sound/music, mouse/touch controls, and local save/resume.
 
 It is a close recreation, **not a verified exact Warcraft III port**. Original map data is used wherever available; engine-dependent mechanics and several complex abilities are approximated. See [FIDELITY.md](FIDELITY.md).
 
@@ -20,7 +20,6 @@ It is a close recreation, **not a verified exact Warcraft III port**. Original m
      app.js
      engine.js
      audio.js
-     runner.js
      style.css
      assets/
      data/
@@ -60,46 +59,28 @@ python3 -m http.server 8080 --directory dist
 
 Open **http://localhost:8080**. Keep the terminal running. Stop it with Ctrl+C.
 
-Do not open `index.html` directly as a file: the game loads its JSON data and code worker over HTTP.
+Do not open `index.html` directly as a file: the game loads its JSON data over HTTP.
 
 ## Play
 
 1. Choose difficulty, elemental selection, and game length. Optional Chaos and Extreme are available.
-2. Build Arrow/Cannon towers on green ground beside the road.
+2. Tap a green grid cell beside the road, select Arrow/Cannon, then tap Build or the same tower choice again to confirm. Cancel spends no gold.
 3. After wave 5, spend your first lumber on an elemental guardian. Defeat it to unlock that element. Normal mode starts with no lumber.
-4. Select a built tower to upgrade through the original single/dual/triple element branches, change targeting, activate abilities, or sell.
+4. Select a built tower to inspect its stats. Choose an upgrade, review its stats and cost, and confirm Upgrade. Tower controls also let you change targeting, activate abilities, or sell.
 5. Interest pays every 15 seconds; lumber can increase interest or summon another element.
 6. Survive 60 waves, then hold out against the Ronald finale. The first wave starts after the preparation countdown; you can send it earlier.
 
-Towers snap to visible 96-unit grid cells on buildable ground. Neighboring cells can hold towers side by side; roads and blocked terrain remain unavailable. The highlighted cell uses the same placement rules as the final build. The map and control dock share the viewport: shop at the right on desktop, a horizontally scrollable tower shelf below on mobile. The map frame trims blocked outer terrain and decorative padding. Random and Same Random sales return 100% of the total gold invested, including upgrades; the Sell button shows the refund percentage. The mobile battlefield takes most of the screen; More/Less expands or collapses the details dock, and selecting a tower opens its upgrade controls. Longer panels scroll inside the dock.
+Towers snap to visible 96-unit grid cells on buildable ground. Neighboring cells can hold towers side by side; roads and blocked terrain remain unavailable. The highlighted cell uses the same placement rules as the final build. The map and control dock share the viewport: contextual controls at the right on desktop, a horizontally scrollable tower shelf below on mobile that opens after selecting a cell. The map frame trims blocked outer terrain and decorative padding. Random and Same Random sales return 100% of the total gold invested, including upgrades; the Sell button shows the refund percentage. The mobile battlefield takes most of the screen; More/Less expands or collapses the details dock, and selecting a tower opens its upgrade controls. Longer panels scroll inside the dock. Important mobile buttons have at least 44-pixel touch targets. Selection uses a clear grid highlight and tower range preview; brief messages appear in the map footer rather than covering enemies.
 
-Space pauses; Escape cancels placement. The speed button cycles 1×/2×/4×. Touch controls use the same selection-and-placement flow. Sound starts after a user action; music is optional in the setup menu. Local storage automatically saves runs every five seconds and when leaving the page. Continue a saved run from **New game → Continue saved run**. Saves are specific to the browser and website origin.
+Space pauses; Escape cancels placement. The speed button cycles 1×/2×/4×. Touch controls use the same selection-and-placement flow. Sound starts after a user action; music is optional in the setup menu. Local storage automatically saves runs every five seconds and when leaving the page. Continue a saved run from **Settings → Continue saved run**. Saves are specific to the browser and website origin.
 
-### Optional coding
-
-The Code tab runs real JavaScript in a Web Worker. Building scripts run once; combat scripts run every 250ms. Long-running scripts are terminated after 500ms and built-in targeting resumes.
-
-```js
-build("Arrow", 1); // numbered map site
-summon("fire");
-
-for (const tower of towers) {
-  const targets = enemies.filter(enemy =>
-    distance(tower, enemy) <= tower.range
-  );
-  targets.sort((a, b) => b.progress - a.progress);
-  if (targets.length) attack(tower.id, targets[0].id);
-}
-```
-
-Use the in-game API reference and Library for tower rawcodes and upgrade branches. Switch to **Auto target** to restore normal targeting. Code and saved games stay in this browser; this is a learning tool, not a hostile-code security boundary.
+The Tower Library is on the starting/settings screen. Search all 134 towers, inspect costs and abilities, and follow upgrade branches before starting a run. Closing the Library returns to the settings you chose. The battle journal is available as a collapsible section in Settings. There is no Code panel or user-script runner.
 
 ## Project files
 
 - `dist/engine.js`: simulation and tower-family mechanics.
-- `dist/app.js`: UI, canvas rendering, controls, saves, and code runner management.
+- `dist/app.js`: UI, canvas rendering, controls, and saves.
 - `dist/audio.js`: original procedural sound effects and ambient score.
-- `dist/runner.js`: user-code worker.
 - `dist/data/game.json`: compact gameplay data derived from the 4.3b map.
 - `dist/data/tower-reference.json`: original extracted tower records for reference.
 - `dist/assets/*.png`: three original sprite atlases, 48 illustrated sprite cells total. Higher-level/fusion towers reuse elemental visuals with elemental markers.
@@ -115,12 +96,11 @@ npm test
 node --check dist/app.js
 node --check dist/engine.js
 node --check dist/audio.js
-node --check dist/runner.js
 ```
 
 There are no npm packages to install. `npm test` covers resource rules, construction/upgrades/refunds, element requirements, guardians, difficulty damage/armor, waves, leaks, revival, mode restrictions, all 134 tower attack handlers, Afterlife, Ronald progression, and a full 60-wave transition.
 
-Browser checks were performed in Chromium at desktop and mobile viewport sizes. They cover startup, mouse/touch placement, upgrades, worker building/targeting and infinite-loop timeout, wave spawning, save/reload, solo draft, mobile overflow, and runtime exceptions. Other browsers should be checked before calling the release broadly verified.
+Browser checks were performed in Chromium at desktop and mobile viewport sizes. They cover startup, mouse/touch placement, upgrades, grid-first preview/confirmation/cancellation, setup Library search and settings preservation, wave spawning, save/reload, solo draft, mobile overflow, and runtime exceptions. Other browsers should be checked before calling the release broadly verified.
 
 ### Regenerate gameplay data
 

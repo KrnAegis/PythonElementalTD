@@ -74,7 +74,7 @@ Every defense is reachable through its graph/requirements and has a working atta
 - Same Random and All Random have little meaningful difference with one player. Both are deterministic for a given seed, with their respective selection paths retained.
 - Native RNG is replaced with a deterministic JavaScript PRNG. Seeded outcomes will not match Warcraft's original generator.
 - Artwork, sound, music, UI, sprite silhouettes, and animations are original. The 48 atlas cells are reused across tower tiers/fusions and enemy classes; they do not recreate every original model as a unique sprite.
-- Convenience features—pause, 1×/2×/4× speed, local autosave/resume, numbered building sites, tower database, manual shortening of a completed wave's countdown, and JavaScript control—are new.
+- Convenience features—pause, 1×/2×/4× speed, local autosave/resume, numbered building sites, tower database, manual shortening of a completed wave's countdown—are new.
 - Coding combat runs at 250ms intervals and can alter targeting cadence. Built-in targeting is the closer mode for playing the original rules.
 - Exact full balance and original-engine corner cases still need playtesting. Browser tests establish that the implementation runs, not that every original ability is numerically identical in all situations.
 
@@ -82,7 +82,7 @@ Every defense is reachable through its graph/requirements and has a working atta
 
 - Simulation regression tests cover source values, requirements, upgrades/refunds, damage/armor, spawn counts, leaks/revival, Chaos/Draft, all 134 defense attack handlers, Afterlife, and Ronald progression.
 - A stress defense completed all 60 waves with 1,800 credited normal kills and transitioned into the Ronald finale. That checks scheduling and state integrity, not normal-game balance or solvability.
-- Chromium desktop/mobile checks cover startup, original data loading, real code-worker actions, wave spawning, responsive overflow, and uncaught runtime exceptions.
+- Chromium desktop/mobile checks cover startup, original data loading, grid-first building, confirmation, cancellation, and setup Library, wave spawning, responsive overflow, and uncaught runtime exceptions.
 
 For stricter parity, the next engineering work is translating and testing the remaining native/dynamic spell behavior against the original 4.3b map in the matching Warcraft III runtime.
 

@@ -1,22 +1,2 @@
-import fs from 'node:fs/promises';
-const tabs=await (await fetch('http://127.0.0.1:9222/json/list')).json();const tab=tabs.find(t=>t.type==='page');const ws=new WebSocket(tab.webSocketDebuggerUrl);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject;});let seq=0;const pending=new Map(),errors=[];ws.onmessage=event=>{const m=JSON.parse(event.data);if(m.id){const p=pending.get(m.id);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}else if(m.method==='Runtime.exceptionThrown')errors.push(m.params.exceptionDetails);};
-const cdp=(method,params={})=>new Promise((resolve,reject)=>{const id=++seq;pending.set(id,{resolve,reject});ws.send(JSON.stringify({id,method,params}));});
-const evaluate=async expression=>{const r=await cdp('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
-const delay=ms=>new Promise(r=>setTimeout(r,ms));
-await cdp('Runtime.enable');await cdp('Page.enable');await cdp('Emulation.setDeviceMetricsOverride',{width:1440,height:1200,deviceScaleFactor:1,mobile:false});await cdp('Page.navigate',{url:'http://127.0.0.1:8080'});await delay(2000);
-console.log('Loaded',await evaluate('({title:document.title,game:!!window.elementGame,modal:document.querySelector("#setup").open,towers:window.elementGame?.data.towers.length})'));
-let image=await cdp('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await fs.writeFile(new URL('../preview-setup.png',import.meta.url),Buffer.from(image.data,'base64'));
-await evaluate('document.querySelector("#setupForm").requestSubmit()');await delay(500);
-console.log('Started',await evaluate('({options:window.elementGame.options,modal:document.querySelector("#setup").open})'));
-// Exercise controls and a real worker build script through the rendered UI.
-await evaluate('document.querySelector("[data-tab=code]").click(); document.querySelector("#applyCode").click()');await delay(900);
-console.log('Build script',await evaluate('({towers:window.elementGame.player.towers.length,lumber:window.elementGame.player.lumber,bosses:window.elementGame.player.enemies.filter(e=>e.boss).length,gold:window.elementGame.player.gold})'));
-await evaluate('document.querySelector("[data-code=combat]").click();document.querySelector("#applyCode").click()');await delay(700);
-console.log('Combat worker',await evaluate('window.elementGame.player.codeActive'));
-await evaluate('document.querySelector("#disableCode").click();document.querySelector("[data-tab=build]").click();document.querySelector("#send").click()');await delay(1000);
-console.log('Wave',await evaluate('({wave:window.elementGame.wave,spawning:window.elementGame.spawning?.count,enemies:window.elementGame.player.enemies.length})'));
-image=await cdp('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await fs.writeFile(new URL('../preview-game.png',import.meta.url),Buffer.from(image.data,'base64'));
-await cdp('Emulation.setDeviceMetricsOverride',{width:390,height:844,deviceScaleFactor:1,mobile:true});await delay(500);
-console.log('Mobile overflow',await evaluate('({width:innerWidth,scroll:document.documentElement.scrollWidth,canvas:document.querySelector("#map").getBoundingClientRect().toJSON()})'));
-image=await cdp('Page.captureScreenshot',{format:'png',captureBeyondViewport:false});await fs.writeFile(new URL('../preview-mobile.png',import.meta.url),Buffer.from(image.data,'base64'));
-console.log('Runtime exceptions',errors);ws.close();if(errors.length)process.exitCode=1;
+// Run the current browser flow checks. Chromium CDP must be listening on port 9222.
+import './advanced.mjs';
