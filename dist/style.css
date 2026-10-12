@@ -22,3 +22,8 @@ main{height:calc(100dvh - 38px);padding:3px;gap:3px;grid-template-rows:minmax(0,
 #toast{bottom:25px;padding:5px 10px;font-size:10px}
 }
 @media(max-width:740px) and (max-height:500px){main{grid-template-columns:minmax(0,1fr) 160px;grid-template-rows:minmax(0,1fr)}main.dock-expanded{grid-template-rows:minmax(0,1fr)}.tabs{flex-wrap:wrap}.tabs button{flex:1 0 30%}.tower-grid{display:grid;grid-template-columns:1fr 1fr;overflow:visible}.tower-card{min-width:0}}
+
+/* Fit the frame to the playable map instead of a wide decorative surround. */
+.battlefield{width:100%;max-width:calc((100dvh - 260px)*.71);justify-self:center;border-radius:2px;box-shadow:none}.battlefield canvas{background:transparent}
+@media(max-width:740px){main{padding:0;gap:2px}.battlefield{max-width:none;border-left:0;border-right:0;border-radius:0}.battle-controls,.wave-info,.battle-heading{margin-left:3px;margin-right:3px}}
+@media(max-height:500px) and (min-width:741px){.battlefield{max-width:calc((100dvh - 155px)*.71)}}
