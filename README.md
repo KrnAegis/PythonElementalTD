@@ -71,7 +71,7 @@ Do not open `index.html` directly as a file: the game loads its JSON data and co
 5. Interest pays every 15 seconds; lumber can increase interest or summon another element.
 6. Survive 60 waves, then hold out against the Ronald finale. The first wave starts after the preparation countdown; you can send it earlier.
 
-Towers snap to visible 96-unit grid cells on buildable ground. Neighboring cells can hold towers side by side; roads and blocked terrain remain unavailable. The highlighted cell uses the same placement rules as the final build. The map and control dock share the viewport: shop at the right on desktop, below on mobile, with longer panels scrolling inside the dock.
+Towers snap to visible 96-unit grid cells on buildable ground. Neighboring cells can hold towers side by side; roads and blocked terrain remain unavailable. The highlighted cell uses the same placement rules as the final build. The map and control dock share the viewport: shop at the right on desktop, a horizontally scrollable tower shelf below on mobile. The mobile battlefield takes most of the screen; More/Less expands or collapses the details dock, and selecting a tower opens its upgrade controls. Longer panels scroll inside the dock.
 
 Space pauses; Escape cancels placement. The speed button cycles 1×/2×/4×. Touch controls use the same selection-and-placement flow. Sound starts after a user action; music is optional in the setup menu. Local storage automatically saves runs every five seconds and when leaving the page. Continue a saved run from **New game → Continue saved run**. Saves are specific to the browser and website origin.
 
