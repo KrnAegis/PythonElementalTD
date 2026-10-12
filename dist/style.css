@@ -42,3 +42,12 @@ button:disabled{opacity:.7}.tower-card.active{outline:2px solid #d5f6ad;outline-
 #setup .journal{display:block;margin-top:12px;padding:8px 0}#setup .journal summary{cursor:pointer;font-size:12px;color:var(--muted)}#setup .journal #journal{height:100px}.journal[open]>div{margin-top:8px}
 
 button{touch-action:manipulation}
+
+/* Mobile panels float above the map; opening them never resizes the battlefield. */
+@media(max-width:740px) and (min-height:501px){
+ main,main.build-target,main.dock-expanded{grid-template-rows:minmax(0,1fr) 98px}
+ aside{position:relative;overflow:visible}
+ main.build-target aside .dock-scroll,main.dock-expanded aside .dock-scroll{position:absolute;left:0;right:0;bottom:calc(100% + 84px);z-index:5;height:144px;max-height:40dvh;background:#17211ef5;border:1px solid #719665;border-radius:8px;box-shadow:0 -4px 18px #0006;overflow:auto}
+ main.dock-expanded aside .dock-scroll{height:min(30dvh,250px)}
+ .tabs{background:var(--panel);border-radius:8px 8px 0 0}
+}
