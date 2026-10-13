@@ -76,7 +76,7 @@ Space pauses; Escape cancels placement. The speed button cycles 1×/2×/4×. Tou
 
 The Tower Library is on the starting/settings screen. Search all 134 towers, inspect costs and abilities, and follow upgrade branches before starting a run. Closing the Library returns to the settings you chose. The battle journal is available as a collapsible section in Settings. There is no Code panel or user-script runner.
 
-Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terrain includes layered forest canopies, grass, pebbles, and road texture. Towers have elemental inlays, family-specific emitters, and multi-element ornaments. Attacks use distinct flame, radiant, ice, water, foliage, earth, void, and family-specific effects; fusion attacks retain all constituent colors. Effects are cosmetic: damage, costs, ranges, and tower recipes are unchanged. Trails and glow are reduced during heavy combat, and drawing is capped at 180 concurrent effects.
+Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terrain includes layered forest canopies, grass, pebbles, and road texture. Towers have elemental inlays, family-specific emitters, and multi-element ornaments. Attacks use distinct flame, radiant, ice, water, foliage, earth, void, and family-specific effects; fusion attacks retain all constituent colors. Buffs and debuffs use live status state and snapshots of their source tower: water droplets for Well boosts, forge flames for Smith boosts, roots, frost cages, curses, armor-break marks, burns, clones, shields, and more. Fusion status effects retain their constituent colors. Indicators disappear when their gameplay effect expires; selected towers list active effects and their sources. Effects are cosmetic: damage, costs, ranges, and tower recipes are unchanged. Trails and glow are reduced during heavy combat, and drawing is capped at 180 concurrent effects.
 
 ## Project files
 
@@ -85,6 +85,7 @@ Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terr
 - `dist/audio.js`: original procedural sound effects and ambient score.
 - `dist/visuals.js`: layered model details, glowing elemental projectiles, fusion trails, and area effects.
 - `dist/towerStyles.js`: semantic visual identities for all 36 tower families.
+- `dist/statusVisuals.js`: source-aware buff/debuff glyphs, auras, and lifetime indicators.
 - `dist/data/game.json`: compact gameplay data derived from the 4.3b map.
 - `dist/data/tower-reference.json`: original extracted tower records for reference.
 - `dist/assets/*.png`: three original sprite atlases, 48 illustrated sprite cells total. Higher-level/fusion towers reuse elemental visuals with elemental markers.
