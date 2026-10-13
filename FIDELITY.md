@@ -87,3 +87,5 @@ Every defense is reachable through its graph/requirements and has a working atta
 For stricter parity, the next engineering work is translating and testing the remaining native/dynamic spell behavior against the original 4.3b map in the matching Warcraft III runtime.
 
 Placement uses a browser-friendly 96-unit grid with an 80-unit footprint and one tower per cell. This deliberately allows adjacent towers and differs from the original Warcraft placement spacing. Existing saved towers retain their positions.
+
+Visual effects use original tower-family and element data to select distinct projectiles and fusion palettes. Terrain details, model ornaments, and emissive effects are new cosmetic rendering, with no changes to combat values or buildable ground. Source sprite atlases are retained.

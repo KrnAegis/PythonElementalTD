@@ -1,3 +1,4 @@
+import {FAMILY_EFFECTS,attackStyle} from '../dist/towerStyles.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -31,3 +32,5 @@ test('grid cells snap consistently and allow neighboring towers',()=>{const g=ma
 
 test('random modes sell upgraded elemental towers for their full investment',()=>{for(const selection of ['AR','SR']){const g=make({selection}),p=g.player;p.gold=10000;p.elements.fire=3;const initial=p.gold,t=firstBuild(g,'Fire'),next=g.defs[t.type].upgrades[0];assert.ok(next);assert.equal(g.upgrade(p,t.id,next).ok,true);const invested=initial-p.gold;assert.equal(g.refundRate(t),1);assert.equal(g.sell(p,t.id).value,invested);assert.equal(p.gold,initial);}});
 test('map frame trims blocked outer terrain without hiding buildable land',()=>{const g=make(),b=g.mapBounds(),original=data.lanes[0].bounds;assert.ok(b[0]>original[0]&&b[1]>original[1]&&b[2]<original[2]&&b[3]<original[3]);for(const s of g.buildingSites(g.player)){assert.ok(s.x-40>=b[0]&&s.x+40<=b[2]&&s.y-40>=b[1]&&s.y+40<=b[3]);}for(const [x,y] of data.lanes[0].path)assert.ok(x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3]);});
+
+test('all tower families have explicit visual identities and attacks retain fusion elements',()=>{for(const d of data.towers){assert.ok(FAMILY_EFFECTS[d.family],d.name);assert.ok(attackStyle(d));const g=make(),p=g.player,site=g.buildingSites(p)[0],t={id:1,type:d.id,x:site.x,y:site.y,cool:0,buffs:{},stack:0,attacks:0,lastAttack:0,ammo:7,charge:0,abilityCooldown:0,abilityClock:0,lifeKills:0};p.towers=[t];g.seq=1;const e=g.spawn(p,{name:'target',id:'target',element:'earth',speed:300,traits:[]},1e9);e.x=t.x+100;e.y=t.y;g.attack(p,t.id,e.id);const shot=g.effects.find(e=>e.tx!==undefined);assert.ok(shot,d.name);assert.equal(shot.towerType,d.id);assert.equal(shot.style,attackStyle(d));assert.deepEqual(shot.elements,d.elements);assert.equal(g.visualSource,null);}});
