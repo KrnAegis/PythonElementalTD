@@ -47,3 +47,5 @@ export function areaEffect(c,e,screen,scale,time){const p=screen(e.x,e.y),q=Math
  else if(['orbit','radiant','plasma','prismatic','rune'].includes(style)){star(c,x,y,10*scale,4,time*5);c.fill();}
  else c.fillRect(x-3*scale,y-3*scale,6*scale,6*scale);}
  c.restore();}
+
+export function drawHurricane(c,t,def,screen,scale,time){const h=t.hurricane;if(!h)return;const p=screen(h.x,h.y),s=scale,colors=def.elements.map(e=>COLORS[e]);c.save();c.lineWidth=5*s;c.globalAlpha=.65;for(let i=0;i<7;i++){const y=p.y-i*30*s,r=(20+i*13)*s,spin=time*7+i*.8;c.strokeStyle=i%2?'#d9edef':colors[i%colors.length];c.beginPath();c.ellipse(p.x+Math.sin(spin)*8*s,y,r,9*s+i*2*s,0,spin,spin+Math.PI*1.7);c.stroke();}for(let i=0;i<8;i++){const a=time*5+i*.8,r=(30+i*8)*s;c.fillStyle=colors[i%colors.length];c.fillRect(p.x+Math.cos(a)*r,p.y-((time*70+i*25)%200)*s,5*s,4*s);}c.globalAlpha=.18;c.fillStyle='#d0e5de';c.beginPath();c.ellipse(p.x,p.y,80*s,20*s,0,0,Math.PI*2);c.fill();c.restore();}

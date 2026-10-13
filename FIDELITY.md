@@ -68,7 +68,7 @@ Every defense is reachable through its graph/requirements and has a working atta
 - Shots and many ability effects apply damage immediately. Their drawn projectiles animate independently. The original spell travel, helix/boomerang/orbit geometry, secondary bomb scatter, lightning callback timing, and precise impact collision are approximated.
 - Poison uses a capped per-target radius progression instead of a complete translation of the original dynamic spreading/list implementation.
 - Burn/corrosion/roots ticks, native stun duration, some debuff durations, tornado placement, reload durations, and native spell activation cooldowns are modeled rather than fully validated.
-- The storm does not create and control a native tornado unit. Orbit and boomerang do not use the original motion/dummy systems. Oblivion ammo and Magic are simplified state machines.
+- Storm creates a browser hurricane that patrols road segments inside its caster’s range. Damage and slow pulses are centered on that moving hurricane; this is a requested gameplay adaptation, not a recreation of native tornado control. Orbit and boomerang do not use the original motion/dummy systems. Oblivion ammo and Magic are simplified state machines.
 - Enemy Mechanical shield, Healing, Fast, Undead, and Image behavior is implemented, but native mana regeneration, native illusion damage ratios, special spell immunity, and damage-trigger details can differ. Illusions expire after five seconds and do not consume lives or award normal bounty.
 - Draft voting is replaced with solo elimination selection. Multiplayer, race scoring, opponent weapons, host voting, team mechanics, and Warcraft chat commands are omitted intentionally.
 - Same Random and All Random have little meaningful difference with one player. Both are deterministic for a given seed, with their respective selection paths retained.
@@ -93,3 +93,5 @@ Visual effects use original tower-family and element data to select distinct pro
 Buff/debuff indicators are rendered from live status state, with source identity saved at application time. They are new browser visuals, not extracted Warcraft buff artwork. Expiring effects, damage-over-time, clones, native shields, speed bursts, healing, and revival are represented without changing their gameplay strength.
 
 Monster walking artwork is new procedural pixel art with creature-category gaits and directional frames. It replaces the previous static enemy rendering, rather than reproducing native Warcraft model animations. Movement, speed modifiers, collision/path data, and combat values are unchanged.
+
+Element guardians now use original animated golems with three visual stages per element. Original guardian combat data is retained. Hurricane tests verify road alignment, movement, source range boundaries, slow attribution, and removal when no enemies remain in range.

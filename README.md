@@ -80,7 +80,9 @@ Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terr
 
 Choose **Map look** in Settings to switch between Spring, Summer, Autumn, and Winter during a run. Autumn uses golden foliage; Winter uses snowy ground and tree caps. Subtle seasonal leaves/petals or snow drift behind units and effects. Turn them off with **Subtle leaves / snowfall**; reduced-motion preferences also disable them. Appearance choices persist in this browser and do not change gameplay. The road uses the original terrain grid without a route line or dotted trail.
 
-Monsters now use original 48×48 pixel-art animations with eight movement frames and four directions. Gaits vary by creature: biped steps, four-legged movement, wingbeats, spider legs, worm/naga slithering, slime squash, elemental motion, and vehicle tracks. Frame progression follows actual distance traveled, so slows affect cadence and stun/pause stops movement. Guardian portraits use the corresponding animated model. Sprite sheets are generated lazily and cached to limit mobile memory use.
+Monsters now use original 48×48 pixel-art animations with eight movement frames and four directions. Gaits vary by creature: biped steps, four-legged movement, wingbeats, spider legs, worm/naga slithering, slime squash, elemental motion, and vehicle tracks. Frame progression follows actual distance traveled, so slows affect cadence and stun/pause stops movement. Element guardians use six original golem designs with three stages each: small plain bodies, reinforced armor, then larger bodies with spikes and stronger elemental accents. Obtained-element portraits use the same golem as the summoned guardian. Sprite sheets are generated lazily and cached to limit mobile memory use.
+
+Storm towers create a visible hurricane that patrols the enemy road inside the source tower’s range, reversing at range boundaries. Its damage and slowing pulses follow the moving hurricane. It disappears when no enemies are in range.
 
 ## Project files
 
@@ -90,6 +92,7 @@ Monsters now use original 48×48 pixel-art animations with eight movement frames
 - `dist/visuals.js`: layered model details, glowing elemental projectiles, fusion trails, and area effects.
 - `dist/towerStyles.js`: semantic visual identities for all 36 tower families.
 - `dist/creatureAnimation.js`: cached eight-frame, four-direction creature animation atlases.
+- `dist/golems.js`: six elemental golems with three increasingly powerful visual stages.
 - `dist/seasons.js`: four seasonal palettes and sparse background weather.
 - `dist/statusVisuals.js`: source-aware buff/debuff glyphs, auras, and lifetime indicators.
 - `dist/data/game.json`: compact gameplay data derived from the 4.3b map.
