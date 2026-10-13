@@ -66,3 +66,20 @@ button{touch-action:manipulation}
 @media(max-height:500px) and (min-width:741px){.battlefield{max-width:calc((100dvh - 105px)*.71)}}
 
 .map-controls svg{width:22px;height:22px;fill:currentColor;display:block;margin:auto;pointer-events:none}
+
+/* The two original green pockets hold the economy controls. */
+.interest-map{min-height:0;padding:2px;grid-template-columns:1fr auto;line-height:1.05;overflow:hidden}.interest-map>span{font-size:clamp(6px,calc(var(--hud-unit)*48px),9px);letter-spacing:0}.interest-map b{font-size:clamp(10px,calc(var(--hud-unit)*90px),16px)}.interest-map small{font-size:clamp(7px,calc(var(--hud-unit)*58px),11px)}
+.shop-map{position:absolute;z-index:3;padding:0;border:0;min-height:0;background:transparent;border-radius:0;overflow:visible}.shop-map img{width:100%;height:100%;object-fit:contain;image-rendering:pixelated;display:block;pointer-events:none}.shop-map::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100%,44px);height:max(100%,44px)}.shop-map:hover{background:transparent;filter:brightness(1.15)}.close-tower{float:right;width:44px;height:44px;padding:0;font-size:24px}
+@media(max-width:740px){
+ main,main.build-target,main.dock-expanded{position:relative;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);gap:0}
+ aside{position:absolute;left:4px;right:4px;bottom:26px;height:0;min-height:0;overflow:visible;border:0;background:none;pointer-events:none}
+ aside .tabs,aside .build-prompt{display:none}
+ aside .dock-scroll{display:none}
+ main.build-target aside .dock-scroll,main.dock-expanded.inspecting aside .dock-scroll{display:block;position:absolute;left:0;right:0;bottom:0;z-index:5;height:144px;max-height:40dvh;overflow:auto;pointer-events:auto;background:#17211ef5;border:1px solid #719665;border-radius:8px;box-shadow:0 -4px 18px #0006}
+ main.dock-expanded.inspecting aside .dock-scroll{height:min(34dvh,290px)}
+ main.dock-expanded.inspecting #panel{display:none}
+ .interest-map{padding:2px;min-height:0}
+}
+@media(max-width:740px){aside{bottom:52px}main.build-target aside .dock-scroll{height:154px}.tower-grid{scrollbar-width:none}.tower-grid::-webkit-scrollbar{display:none}}
+
+.interest-map{overflow:visible}.interest-map::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:max(100%,44px);height:max(100%,44px)}
