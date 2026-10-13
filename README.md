@@ -78,6 +78,8 @@ The Tower Library is on the starting/settings screen. Search all 134 towers, ins
 
 Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terrain includes layered forest canopies, grass, pebbles, and road texture. Towers have elemental inlays, family-specific emitters, and multi-element ornaments. Attacks use distinct flame, radiant, ice, water, foliage, earth, void, and family-specific effects; fusion attacks retain all constituent colors. Buffs and debuffs use live status state and snapshots of their source tower: water droplets for Well boosts, forge flames for Smith boosts, roots, frost cages, curses, armor-break marks, burns, clones, shields, and more. Fusion status effects retain their constituent colors. Indicators disappear when their gameplay effect expires; selected towers list active effects and their sources. Effects are cosmetic: damage, costs, ranges, and tower recipes are unchanged. Trails and glow are reduced during heavy combat, and drawing is capped at 180 concurrent effects.
 
+Choose **Map look** in Settings to switch between Spring, Summer, Autumn, and Winter during a run. Autumn uses golden foliage; Winter uses snowy ground and tree caps. Subtle seasonal leaves/petals or snow drift behind units and effects. Turn them off with **Subtle leaves / snowfall**; reduced-motion preferences also disable them. Appearance choices persist in this browser and do not change gameplay. The road uses the original terrain grid without a route line or dotted trail.
+
 ## Project files
 
 - `dist/engine.js`: simulation and tower-family mechanics.
@@ -85,6 +87,7 @@ Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terr
 - `dist/audio.js`: original procedural sound effects and ambient score.
 - `dist/visuals.js`: layered model details, glowing elemental projectiles, fusion trails, and area effects.
 - `dist/towerStyles.js`: semantic visual identities for all 36 tower families.
+- `dist/seasons.js`: four seasonal palettes and sparse background weather.
 - `dist/statusVisuals.js`: source-aware buff/debuff glyphs, auras, and lifetime indicators.
 - `dist/data/game.json`: compact gameplay data derived from the 4.3b map.
 - `dist/data/tower-reference.json`: original extracted tower records for reference.
