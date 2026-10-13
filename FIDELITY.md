@@ -91,3 +91,5 @@ Placement uses a browser-friendly 96-unit grid with an 80-unit footprint and one
 Visual effects use original tower-family and element data to select distinct projectiles and fusion palettes. Terrain details, model ornaments, and emissive effects are new cosmetic rendering, with no changes to combat values or buildable ground. Source sprite atlases are retained.
 
 Buff/debuff indicators are rendered from live status state, with source identity saved at application time. They are new browser visuals, not extracted Warcraft buff artwork. Expiring effects, damage-over-time, clones, native shields, speed bursts, healing, and revival are represented without changing their gameplay strength.
+
+Monster walking artwork is new procedural pixel art with creature-category gaits and directional frames. It replaces the previous static enemy rendering, rather than reproducing native Warcraft model animations. Movement, speed modifiers, collision/path data, and combat values are unchanged.

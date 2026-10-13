@@ -80,6 +80,8 @@ Rendering uses a 1536-pixel-wide internal canvas for sharper detail. Cached terr
 
 Choose **Map look** in Settings to switch between Spring, Summer, Autumn, and Winter during a run. Autumn uses golden foliage; Winter uses snowy ground and tree caps. Subtle seasonal leaves/petals or snow drift behind units and effects. Turn them off with **Subtle leaves / snowfall**; reduced-motion preferences also disable them. Appearance choices persist in this browser and do not change gameplay. The road uses the original terrain grid without a route line or dotted trail.
 
+Monsters now use original 48×48 pixel-art animations with eight movement frames and four directions. Gaits vary by creature: biped steps, four-legged movement, wingbeats, spider legs, worm/naga slithering, slime squash, elemental motion, and vehicle tracks. Frame progression follows actual distance traveled, so slows affect cadence and stun/pause stops movement. Guardian portraits use the corresponding animated model. Sprite sheets are generated lazily and cached to limit mobile memory use.
+
 ## Project files
 
 - `dist/engine.js`: simulation and tower-family mechanics.
@@ -87,6 +89,7 @@ Choose **Map look** in Settings to switch between Spring, Summer, Autumn, and Wi
 - `dist/audio.js`: original procedural sound effects and ambient score.
 - `dist/visuals.js`: layered model details, glowing elemental projectiles, fusion trails, and area effects.
 - `dist/towerStyles.js`: semantic visual identities for all 36 tower families.
+- `dist/creatureAnimation.js`: cached eight-frame, four-direction creature animation atlases.
 - `dist/seasons.js`: four seasonal palettes and sparse background weather.
 - `dist/statusVisuals.js`: source-aware buff/debuff glyphs, auras, and lifetime indicators.
 - `dist/data/game.json`: compact gameplay data derived from the 4.3b map.
